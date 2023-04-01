@@ -1,0 +1,38 @@
+.App > h1{
+  font-size: 18px;
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.App > h1 > img{
+  width: 30px;
+}
+
+.App div > h2{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+.book {
+  display: flex;
+  align-items: center;
+  gap:20px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 10px
+}
+
+.book img {
+  width: 150px;
+}
+
+.book button{
+  cursor: pointer
+}
