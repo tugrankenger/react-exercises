@@ -1,8 +1,10 @@
 import './style.css';
 import { Routes, Route } from 'react-router-dom';
+import {connect} from 'react-redux'
 import Products from './components/Products';
 import Cart from './components/Cart';
-function App() {
+function App(props) {
+  console.log(props.bookList);
   return (
     <div className='App'>
       <h1>
@@ -21,4 +23,10 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state =>{
+  return{
+    bookList: state.bookList
+  }
+}
+
+export default connect(mapStateToProps)(App);
