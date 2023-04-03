@@ -1,28 +1,33 @@
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Cart = () => {
+const Cart = (props) => {
+  console.log(props);
+  const totalPrice = props.cart.reduce((total,item)=>(total += item.price),0)
   return (
     <div>
       <h2>
         <Link to='/'>Book List</Link> <span>Basket</span>
       </h2>
-      <h3>Total Price: &#8378;199.99</h3>
+      <h3>Total Price: &#8378;{totalPrice.toFixed(2)}</h3>
 
-      <div className='book'>
+      {
+        props.cart.map((item)=>(
+          <div className='book' key={item.id}>
         <img
-          src='https://images-na.ssl-images-amazon.com/images/I/51eqjXwFzwL._SX344_BO1,204,203,200_.jpg'
-          alt='Simyacı'
+          src={item.image}
+          alt={item.name}
         />
         <div>
-          <h4>Simyaci</h4>
+          <h4>{item.name}</h4>
           <p>
-            <strong>Author: </strong>Paulo Coelho
+            <strong>Author: </strong>{item.author}
           </p>
           <p>
-            <strong>Price: </strong>&#8378;199.99
+            <strong>Price: </strong>&#8378;{item.price}
           </p>
           <p>
-            <strong>Total Price: </strong>&#8378;199.99
+            <strong>Total Price: </strong>&#8378; {item.price}
           </p>
           <p>You have 1 of this book in your cart</p>
           <button>-</button> &nbsp;
@@ -30,8 +35,16 @@ const Cart = () => {
           <button>+</button>
         </div>
       </div>
+        ))
+      }
     </div>
   );
 };
 
-export default Cart;
+const mapStateToProps = state =>{
+  return{
+    cart: state.cart
+  }
+}
+
+export default connect(mapStateToProps) (Cart);
