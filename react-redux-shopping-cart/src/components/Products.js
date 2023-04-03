@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addBasket } from '../actions';
+import { addBasket } from '../actions/addBasket';
 
 const Products = (props) => {
   console.log('cart: ',props.cart)

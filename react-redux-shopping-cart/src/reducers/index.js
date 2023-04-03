@@ -10,6 +10,9 @@ const reducer = (state = INITIAL_STATE,action) =>{
     case 'ADD_BASKET' : return {
       ...state, cart:[...state.cart, action.payload]
     }
+    case 'DELETE_BASKET' : return {
+      ...state, cart: [...state.cart.filter((item)=> item !== action.payload)]
+    }
     default: return state
   }
 }
