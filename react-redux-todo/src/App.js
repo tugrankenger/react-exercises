@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addList, toggleList } from './actions';
+import { addList, toggleList, removeList } from './actions';
 import { useState } from 'react';
 import './App.css';
 
@@ -37,7 +37,7 @@ function App(props) {
           </div>
         ))}
       </div>
-      <button className='remove-btn'>Remove that completed</button>
+      <button className='remove-btn' onClick={()=>props.removeList()}>Remove that completed</button>
     </div>
   );
 }
@@ -48,4 +48,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { addList, toggleList })(App);
+export default connect(mapStateToProps, { addList, toggleList, removeList })(
+  App
+);

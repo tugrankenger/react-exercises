@@ -15,3 +15,9 @@ export const toggleList = (id) =>{
     payload: id
   }
 }
+
+export const removeList = () =>{
+  return{
+    type: REMOVE
+  }
+}

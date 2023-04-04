@@ -1,4 +1,4 @@
-import { ADD, TOGGLE } from '../actions';
+import { ADD, REMOVE, TOGGLE } from '../actions';
 
 const INITIAL_STATE = {
   list: [
@@ -41,6 +41,10 @@ const reducer = (state = INITIAL_STATE, action) => {
           return item
         }
       })
+    }
+    case REMOVE : return{
+      ...state,
+      list: state.list.filter((item)=>item.status === false)
     }
     default: return state
   }
