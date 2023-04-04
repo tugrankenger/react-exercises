@@ -8,3 +8,10 @@ export const addList = (title) =>{
     payload:title,
   }
 }
+
+export const toggleList = (id) =>{
+  return{
+    type: TOGGLE,
+    payload: id
+  }
+}

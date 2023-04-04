@@ -1,4 +1,4 @@
-import { ADD } from '../actions';
+import { ADD, TOGGLE } from '../actions';
 
 const INITIAL_STATE = {
   list: [
@@ -28,6 +28,19 @@ const reducer = (state = INITIAL_STATE, action) => {
         title:action.payload,
         status:false
       }]
+    }
+    case TOGGLE : return{
+      ...state,
+      list: state.list.map((item)=> {
+        if(item.id === action.payload){
+          return{
+            ...item,
+            status: !item.status
+          }
+        }else{
+          return item
+        }
+      })
     }
     default: return state
   }

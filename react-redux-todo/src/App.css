@@ -40,3 +40,13 @@ input, button{
 .done{
   text-decoration: line-through;
 }
+
+.todo-item{
+  display: block;
+  cursor: pointer;
+  transition: all ease-in-out .2s;
+}
+
+.todo-item:hover{
+  font-weight: 600;
+}

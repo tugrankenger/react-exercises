@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addList } from './actions';
+import { addList, toggleList } from './actions';
 import { useState } from 'react';
 import './App.css';
 
@@ -28,7 +28,11 @@ function App(props) {
       </div>
       <div className='list'>
         {props.list.map((item) => (
-          <div className={item.status ? 'done' : ''} key={item.id}>
+          <div
+            className={`todo-item ${item.status ? 'done' : ''}`}
+            key={item.id}
+            onClick={() => props.toggleList(item.id)}
+          >
             {item.title}
           </div>
         ))}
@@ -44,4 +48,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { addList })(App);
+export default connect(mapStateToProps, { addList, toggleList })(App);
