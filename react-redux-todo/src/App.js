@@ -1,26 +1,8 @@
-import { useState } from 'react';
+import { connect } from 'react-redux';
 import './App.css';
 
-const INITIAL_STATE = [
-  {
-    id: 1,
-    title: 'Shopping',
-    status: false,
-  },
-  {
-    id: 2,
-    title: 'Play CS:GO',
-    status: true,
-  },
-  {
-    id: 3,
-    title: 'Read book',
-    status: true,
-  },
-];
-
-function App() {
-  const [list, setList] = useState(INITIAL_STATE);
+function App(props) {
+  console.log(props.list);
   return (
     <div className='App'>
       <h1>Todo List</h1>
@@ -29,7 +11,7 @@ function App() {
         <button className='add-btn'>Add</button>
       </div>
       <div className='list'>
-        {list.map((item) => (
+        {props.list.map((item) => (
           <div className={item.status ? 'done' : ''} key={item.id}>
             {item.title}
           </div>
@@ -40,4 +22,10 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    list: state.list,
+  };
+};
+
+export default connect(mapStateToProps)(App);
