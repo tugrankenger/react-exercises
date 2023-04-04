@@ -1,3 +1,5 @@
+import { ADD } from '../actions';
+
 const INITIAL_STATE = {
   list: [
     {
@@ -19,7 +21,16 @@ const INITIAL_STATE = {
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
-  return state;
+  switch(action.type){
+    case ADD : return{
+      ...state, list:[...state.list, {
+        id: state.list.length +1,
+        title:action.payload,
+        status:false
+      }]
+    }
+    default: return state
+  }
 };
 
 export default reducer;

@@ -1,14 +1,30 @@
 import { connect } from 'react-redux';
+import { addList } from './actions';
+import { useState } from 'react';
 import './App.css';
 
 function App(props) {
+  const [text, setText] = useState('');
   console.log(props.list);
   return (
     <div className='App'>
       <h1>Todo List</h1>
       <div className='add-form'>
-        <input type='text' placeholder='Add item' />
-        <button className='add-btn'>Add</button>
+        <input
+          type='text'
+          placeholder='Add item'
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <button
+          className='add-btn'
+          onClick={() => {
+            setText('');
+            props.addList(text);
+          }}
+        >
+          Add
+        </button>
       </div>
       <div className='list'>
         {props.list.map((item) => (
@@ -28,4 +44,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { addList })(App);
