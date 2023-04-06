@@ -8,8 +8,21 @@ const todoReducers = (state = initialData, action) => {
       const { id, data } = action.payload;
       return {
         ...state,
-        data: [...state.list, { id: id, data: data }],
+        list: [...state.list, { id: id, data: data }],
       };
+
+      case 'DELETE_TODO':
+        const item_id = action.id
+        console.log('acrion.id: ', item_id)
+        return{
+          ...state,
+          list:[...state.list.filter((item)=> item.id !== item_id)]
+        }
+        case 'DELETE_ALL_TODO' : 
+        return{
+          ...state,
+          list:[]
+        }
       default : return state
   }
 };

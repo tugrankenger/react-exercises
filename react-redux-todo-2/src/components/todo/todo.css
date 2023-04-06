@@ -33,3 +33,41 @@ input{
   color: #fff;
   border: none;
 }
+
+.show-items{
+  width: 100%;
+}
+
+.item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 0 1rem;
+  margin-bottom: 10px;
+}
+
+.delete-btn{
+  background: #FF0000;
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.remove-all-btn{
+  background: #FF0000;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+}
