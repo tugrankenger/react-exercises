@@ -1,5 +1,10 @@
-import './todo.css'
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTodo } from '../../actions';
+import './todo.css';
 const Todo = () => {
+  const [inputData, setInputData] = useState('');
+  const dispatch = useDispatch();
   return (
     <>
       <div className='container'>
@@ -8,8 +13,18 @@ const Todo = () => {
             <figcaption>Add todo item ✏️</figcaption>
           </figure>
           <div className='add-items'>
-            <input type='text' placeholder='✍️ Entry item...' />
-            <button className='add-btn'>Add</button>
+            <input
+              type='text'
+              placeholder='✍️ Entry item...'
+              value={inputData}
+              onChange={(e) => setInputData(e.target.value)}
+            />
+            <button
+              className='add-btn'
+              onClick={() => dispatch(addTodo(inputData))}
+            >
+              Add
+            </button>
           </div>
         </div>
       </div>
