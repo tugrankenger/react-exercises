@@ -1,11 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/Home';
+import Detail from './pages/Detail';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import PageContainer from './containers/PageContainer';
 function App() {
   return (
-    <div className='App'>
-      <h1 className='text-3xl font-bold underline text-blue-500'>Hello world!</h1>
-    </div>
+    <PageContainer>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='detail/:id' element={<Detail />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </PageContainer>
   );
 }
 
