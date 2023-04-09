@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { BsLightbulb, BsFillMoonStarsFill } from 'react-icons/bs';
 import { SlBasket } from 'react-icons/sl';
 import { HiShoppingBag } from 'react-icons/hi';
+import { useDispatch } from 'react-redux';
 
 function Navbar() {
   const [color, setColor] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
     const root = document.getElementById('root');
     if (color) {
@@ -33,7 +35,10 @@ function Navbar() {
             <BsLightbulb size={25} className='cursor-pointer' />
           )}
         </div>
-        <div className='relative'>
+        <div
+          onClick={() => dispatch({ type: 'DRAWER', payload: true })}
+          className='relative'
+        >
           <SlBasket className='cursor-pointer' size={25} />
           <span className='absolute -top-2 -right-2 px-1 rounded-full bg-red-600 text-white text-sm'>
             3
