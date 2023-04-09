@@ -18,7 +18,7 @@ function Navbar() {
     }
   }, [color]);
   return (
-    <div className='flex items-center justify-between px-3 h-20'>
+    <div className='flex items-center justify-between px-3 h-20 border-b'>
       <div className='bg-blue-400 rounded-full p-2'>
         <HiShoppingBag size={40} />
       </div>

@@ -1,7 +1,7 @@
 
 const PageContainer = ({children}) =>{
   return (
-    <div className='w-3/4 m-auto'>{children}</div>
+    <div className='px-3 m-auto'>{children}</div>
   )
 }
 
