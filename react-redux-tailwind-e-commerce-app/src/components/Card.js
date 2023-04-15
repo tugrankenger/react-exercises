@@ -1,8 +1,11 @@
 import React from 'react';
 import { IoMdCloseCircle } from 'react-icons/io';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 function Card() {
   const dispatch = useDispatch();
+  // const {cardItems} = useSelector((state) => state.cardItems);
+
+  // console.log('cardItems: ', cardItems);
   return (
     <div className='w-1/3 h-full bg-white border fixed top-0 right-0 z-50 p-2'>
       <div className='flex justify-between items-center h-10 p-3 mb-8 border-b'>

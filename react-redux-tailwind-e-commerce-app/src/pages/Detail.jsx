@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { productsActionDetail } from '../redux/actions/products';
+import { productsCart } from '../redux/actions/card';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 const Detail = () => {
   const { id } = useParams();
@@ -15,16 +16,21 @@ const Detail = () => {
   }, [dispatch, id]);
   console.log('product: ', product);
 
-  const decrement = (stock) =>{
-    if(count > 1){
-      setCount(count - 1)
+  const decrement = (stock) => {
+    if (count > 1) {
+      setCount(count - 1);
     }
-  }
-  const increment = (stock) =>{
-    if(count < stock){
-      setCount(count + 1)
+  };
+  const increment = (stock) => {
+    if (count < stock) {
+      setCount(count + 1);
     }
-  }
+  };
+
+  const addCard = () => {
+    dispatch(productsCart(id, count));
+    dispatch({ type: 'DRAWER', payload: true });
+  };
   return (
     <div className='flex items-center justify-center my-4'>
       <div className='w-full max-w-sm bg-white border border-gray-200 rounded-lg flex flex-col items-center shadow-lg'>
@@ -110,12 +116,13 @@ const Detail = () => {
               />
               <span>{count}</span>
               <AiOutlinePlus
-              onClick={()=>increment(product?.rating?.count)}
+                onClick={() => increment(product?.rating?.count)}
                 size={30}
                 className='border rounded-full p-1 cursor-pointer'
               />
             </div>
             <NavLink
+              onClick={addCard}
               to='#'
               className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus: outline-none
             focus:ring-blue-500 font-medium rounded-lg text-sm py-2.5 px-2.5 text-center'
