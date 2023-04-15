@@ -9,6 +9,7 @@ import { drawerReducer } from './reducers/drawer';
 import { productsReducer } from './reducers/products';
 import { productDetailReducer } from './reducers/productDetail';
 
+
 let initialState = {};
 
 const reducers = combineReducers({
