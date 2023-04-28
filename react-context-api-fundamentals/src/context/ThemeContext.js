@@ -3,8 +3,9 @@ import { createContext, useState, useEffect } from 'react';
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   useEffect(() => {
+    localStorage.setItem('theme', theme)
     if (theme === 'dark') {
       document.body.style.backgroundColor = '#333333';
       document.body.style.color = '#efefef';
