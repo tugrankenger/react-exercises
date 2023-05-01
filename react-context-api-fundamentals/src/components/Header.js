@@ -7,6 +7,7 @@ function Header() {
       Active Theme: {theme}
       <br />
       <button onClick={()=>setTheme(theme === 'dark' ? 'light': 'dark')}>Cahnge Theme</button>
+      <hr />
     </div>
   );
 }
