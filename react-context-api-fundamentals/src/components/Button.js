@@ -1,10 +1,9 @@
-import { useContext } from 'react';
-import ThemeContext from '../context/ThemeContext';
+import {useTheme} from '../context/ThemeContext';
 
 // useContext ve ThemeContext import ederek ThemeContext.Provider ile sarmaladigimiz butun component'larda data'ya erisebiliriz.
 
 function Button() {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, setTheme } = useTheme();
 
   return (
     <div>
