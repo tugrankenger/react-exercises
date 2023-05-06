@@ -5,7 +5,6 @@ import { useChat } from '../context/ChatContext';
 
 function ChatForm() {
   const [message, setMessage] = useState('');
-  console.log('messageState: ', message);
   const { setMessages } = useChat();
   const handleSubmit = (e) => {
     e.preventDefault();

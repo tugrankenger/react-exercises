@@ -14,6 +14,11 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
   console.log('a user connected');
 
+  Messages.list((data)=>{
+    console.log("redis messages data: ", data)
+    socket.emit("message-list", data)
+  })
+
   socket.on("new-message", (message) =>{
     console.log("new-message", message)
     Messages.upsert({message})
