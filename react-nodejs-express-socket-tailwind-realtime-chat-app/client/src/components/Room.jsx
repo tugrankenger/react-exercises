@@ -1,7 +1,9 @@
 import React from 'react';
 
-function Room({ username, setUsername, room, setRoom }) {
+function Room({ username, setUsername, room, setRoom, setChatScreen, socket }) {
   const sendRoom = () =>{
+    socket.emit('room', room)
+    setChatScreen(true)
     console.log("username: ", username);
     console.log("room: ", room);
   }
