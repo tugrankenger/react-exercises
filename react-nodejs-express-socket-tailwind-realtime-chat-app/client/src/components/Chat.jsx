@@ -7,8 +7,8 @@ function Chat({ socket, username, room }) {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const contextValue = useContext(DataContext);
-  
-  const userImage = contextValue.images[contextValue.selectedImage - 1].src;
+
+  const userImage = contextValue.images[contextValue.selectedImage - 1]?.src;
 
   useEffect(() => {
     socket.on('returnMessage', (data) => {
@@ -40,7 +40,7 @@ function Chat({ socket, username, room }) {
       <div className='md:w-1/3 w-full md:h-[600px] h-full  bg-chat-image relative '>
         <div className='fixed md:relative top-0 w-full h-16 bg-gray-200 flex items-center p-3'>
           <div className='rounded-full w-12 h-12 bg-white flex items-center gap-x-2'>
-            <img src={userImage} alt='' />
+            <img src={userImage && userImage} alt='' />
             <span className='capitalize text-md'>{username}</span>
           </div>
         </div>

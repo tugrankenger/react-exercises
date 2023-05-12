@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
 import Chat from './components/Chat';
 import Room from './components/Room';
 import io from 'socket.io-client';
@@ -10,22 +11,28 @@ const socket = io.connect('http://localhost:5000');
 function App() {
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
-  const [chatScreen, setChatScreen] = useState(false);
   return (
     <ContextProvider>
       <div className='App'>
-        {!chatScreen ? (
-          <Room
-            username={username}
-            setUsername={setUsername}
-            room={room}
-            setRoom={setRoom}
-            setChatScreen={setChatScreen}
-            socket={socket}
+        <Routes>
+          <Route
+            exact
+            path='/'
+            element={
+              <Room
+                username={username}
+                setUsername={setUsername}
+                room={room}
+                setRoom={setRoom}
+                socket={socket}
+              />
+            }
           />
-        ) : (
-          <Chat socket={socket} username={username} room={room} />
-        )}
+          <Route
+            path='/chat'
+            element={<Chat socket={socket} username={username} room={room} />}
+          />
+        </Routes>
       </div>
     </ContextProvider>
   );

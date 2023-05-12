@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import DataContext from '../context/DataContext';
+import { useNavigate } from 'react-router-dom';
 
-function Room({ username, setUsername, room, setRoom, setChatScreen, socket }) {
+function Room({ username, setUsername, room, setRoom, socket }) {
+  const navigate = useNavigate()
   const [selected, setSelected] = useState(null);
   const { selectedImage, setSelectedImage } = useContext(DataContext);
   const { images } = useContext(DataContext);
@@ -19,7 +21,7 @@ function Room({ username, setUsername, room, setRoom, setChatScreen, socket }) {
   };
   const sendRoom = () => {
     socket.emit('room', room);
-    setChatScreen(true);
+    navigate("/chat")
   };
   return (
     <div className='flex items-center justify-center h-full'>
