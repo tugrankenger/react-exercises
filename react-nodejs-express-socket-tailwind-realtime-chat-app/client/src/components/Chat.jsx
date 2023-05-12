@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ScrollableFeed from 'react-scrollable-feed';
 import { MdSend } from 'react-icons/md';
+import DataContext from '../context/DataContext';
 
 function Chat({ socket, username, room }) {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
+  const contextValue = useContext(DataContext);
+  
+  const userImage = contextValue.images[contextValue.selectedImage - 1].src;
 
   useEffect(() => {
     socket.on('returnMessage', (data) => {
@@ -34,10 +38,13 @@ function Chat({ socket, username, room }) {
   return (
     <div className='flex items-center justify-center h-full '>
       <div className='md:w-1/3 w-full md:h-[600px] h-full  bg-chat-image relative '>
-        <div className='w-full h-16 bg-gray-200 opacity-95 flex items-center p-3'>
-          <div className='rounded-full w-12 h-12 bg-white'></div>
+        <div className='fixed md:relative top-0 w-full h-16 bg-gray-200 flex items-center p-3'>
+          <div className='rounded-full w-12 h-12 bg-white flex items-center gap-x-2'>
+            <img src={userImage} alt='' />
+            <span className='capitalize text-md'>{username}</span>
+          </div>
         </div>
-        <div className='w-full h-[465px] overflow-y-auto '>
+        <div className='w-full h-full md:h-[450px] py-16 md:py-0  overflow-y-auto '>
           <ScrollableFeed forceScroll={true}>
             {messageList &&
               messageList.map((item, index) => {
@@ -65,18 +72,18 @@ function Chat({ socket, username, room }) {
               })}
           </ScrollableFeed>
         </div>
-        <div className='absolute bottom-0 left-0 w-full flex justify-between bg-gray-200 opacity-90 p-3 gap-x-2'>
+        <div className='md:absolute h-16 fixed bottom-0 left-0 w-full flex justify-between bg-gray-200 p-3 gap-x-2'>
           <input
             onKeyDown={handleKeyDown}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className='w-full border-none rounded-full outline-none p-3 h-12'
+            className='w-full border-none rounded-full outline-none p-3 '
             placeholder='Entry message...'
             type='text'
           />
           <button
             onClick={sendMessage}
-            className='w-14 h-12 rounded-full  bg-indigo-600 flex items-center justify-center text-white text-xl'
+            className='w-12 h-10 rounded-full  bg-indigo-600 flex items-center justify-center text-white text-xl'
           >
             <MdSend />
           </button>
