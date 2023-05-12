@@ -21,6 +21,8 @@ function Room({ username, setUsername, room, setRoom, socket }) {
   };
   const sendRoom = () => {
     socket.emit('room', room);
+    setUsername("")
+    setRoom("")
     navigate("/chat")
   };
   return (
@@ -40,7 +42,7 @@ function Room({ username, setUsername, room, setRoom, socket }) {
           value={room}
           onChange={(e) => setRoom(e.target.value)}
           className='border focus:border-indigo-700 p-3 outline-none w-full rounded-lg'
-          type='text'
+          type='number'
           placeholder='Room'
         />
         <div className='w-full p-1'>

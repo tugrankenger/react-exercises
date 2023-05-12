@@ -1,14 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
 import ScrollableFeed from 'react-scrollable-feed';
 import { MdSend } from 'react-icons/md';
+import { BsPower } from 'react-icons/bs';
 import DataContext from '../context/DataContext';
+import { useNavigate } from 'react-router-dom';
 
 function Chat({ socket, username, room }) {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const contextValue = useContext(DataContext);
-
   const userImage = contextValue.images[contextValue.selectedImage - 1]?.src;
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     socket.on('returnMessage', (data) => {
@@ -39,9 +42,16 @@ function Chat({ socket, username, room }) {
     <div className='flex items-center justify-center h-full '>
       <div className='md:w-1/3 w-full md:h-[600px] h-full  bg-chat-image relative '>
         <div className='fixed md:relative top-0 w-full h-16 bg-gray-200 flex items-center p-3'>
-          <div className='rounded-full w-12 h-12 bg-white flex items-center gap-x-2'>
-            <img src={userImage && userImage} alt='' />
-            <span className='capitalize text-md'>{username}</span>
+          <div className='rounded-full w-full flex items-center justify-between'>
+            <div className='flex items-center gap-x-2'>
+              <img className='w-11 h-11' src={userImage && userImage} alt='' />
+              <span className='capitalize text-md'>{username}</span>
+            </div>
+            <div>
+              <button onClick={()=>navigate("/")} className='text-red-600'>
+                <BsPower size={25} />
+              </button>
+            </div>
           </div>
         </div>
         <div className='w-full h-full md:h-[450px] py-16 md:py-0  overflow-y-auto '>
