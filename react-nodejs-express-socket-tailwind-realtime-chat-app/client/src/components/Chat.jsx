@@ -5,13 +5,13 @@ import { BsPower } from 'react-icons/bs';
 import DataContext from '../context/DataContext';
 import { useNavigate } from 'react-router-dom';
 
-function Chat({ socket, username, room }) {
+function Chat({ socket, username, setUsername , room, setRoom}) {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const contextValue = useContext(DataContext);
   const userImage = contextValue.images[contextValue.selectedImage - 1]?.src;
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     socket.on('returnMessage', (data) => {
@@ -37,7 +37,13 @@ function Chat({ socket, username, room }) {
       sendMessage();
     }
   };
-  // console.log(messageList);
+
+  const handleClose = () => {
+    setUsername("")
+    setRoom("")
+    navigate("/")
+  };
+  console.log(messageList);
   return (
     <div className='flex items-center justify-center h-full '>
       <div className='md:w-1/3 w-full md:h-[600px] h-full  bg-chat-image relative '>
@@ -47,8 +53,8 @@ function Chat({ socket, username, room }) {
               <img className='w-11 h-11' src={userImage && userImage} alt='' />
               <span className='capitalize text-md'>{username}</span>
             </div>
-            <div>
-              <button onClick={()=>navigate("/")} className='text-red-600'>
+            <div className='flex'>
+              <button onClick={handleClose} className='text-red-600'>
                 <BsPower size={25} />
               </button>
             </div>
