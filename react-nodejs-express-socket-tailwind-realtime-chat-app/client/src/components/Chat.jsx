@@ -1,15 +1,21 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import ScrollableFeed from 'react-scrollable-feed';
 import { MdSend } from 'react-icons/md';
 import { BsPower } from 'react-icons/bs';
-import DataContext from '../context/DataContext';
 import { useNavigate } from 'react-router-dom';
 
-function Chat({ socket, username, setUsername , room, setRoom}) {
+function Chat({ socket, username, setUsername, room, setRoom }) {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
-  const contextValue = useContext(DataContext);
-  const userImage = contextValue.images[contextValue.selectedImage - 1]?.src;
+
+  let images;
+  const localImages = () => {
+    const imgLoc = localStorage.getItem('images');
+    return imgLoc ? (images = JSON.parse(imgLoc)) : [];
+  };
+
+  console.log('local image', localImages()[0]);
+  const userImage = images[localStorage.getItem('selectedImage') - 1]?.src;
 
   const navigate = useNavigate();
 
@@ -39,9 +45,9 @@ function Chat({ socket, username, setUsername , room, setRoom}) {
   };
 
   const handleClose = () => {
-    setUsername("")
-    setRoom("")
-    navigate("/")
+    setUsername('');
+    setRoom('');
+    navigate('/');
   };
   console.log(messageList);
   return (

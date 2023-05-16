@@ -3,6 +3,7 @@ import { createContext, useState } from 'react';
 const DataContext = createContext();
 
 export const ContextProvider = ({ children }) => {
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [images, setImages] = useState([
     {

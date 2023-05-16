@@ -14,53 +14,65 @@ function Room({ username, setUsername, room, setRoom, socket }) {
   const { images } = useContext(DataContext);
   console.log('selectedContextData:', selectedImage);
 
+  username = localStorage.getItem('username');
+  room = localStorage.getItem('room');
+
   useEffect(() => {
-    console.log('the selected has changed', selected);
-  }, [selected]);
+    localStorage.setItem('images',JSON.stringify(images))
+  }, [images]);
+
+  const localImages= () =>{
+    const imgLoc = localStorage.getItem('images')
+    return imgLoc ? JSON.parse(imgLoc) : []
+  }
+
+  console.log("localImages: ", localImages());
 
   const handleImageClick = (event) => {
     event.isSelected = true;
-    console.log(event);
     setSelected(event.id);
     setSelectedImage(event.id);
-    console.log(selected);
+    localStorage.setItem('selectedImage',event.id)
   };
 
   const handleValidation = () => {
     let formIsValidName = true;
     let formIsValidRoom = true;
     let formIsValidImg = true;
-    if (username.length < 3 || username == '') {
+    if (username.length < 3 || username === '') {
       setErrName(true);
-      formIsValidName = false
+      formIsValidName = false;
     } else {
       setErrName(false);
-      formIsValidName = true
+      formIsValidName = true;
     }
     if (room.length == '') {
       setErrRoom(true);
-      formIsValidRoom = false
+      formIsValidRoom = false;
     } else {
       setErrRoom(false);
-      formIsValidRoom = true
+      formIsValidRoom = true;
     }
     if (selected == null) {
       setErrImg(true);
-      formIsValidImg = false
+      formIsValidImg = false;
     } else {
       setErrImg(false);
-      formIsValidImg = true
+      formIsValidImg = true;
     }
-    console.log(formIsValidName, formIsValidRoom , formIsValidImg);
-    console.log(formIsValidName && formIsValidRoom && formIsValidImg);
-    return (formIsValidName && formIsValidRoom && formIsValidImg)
+    return formIsValidName && formIsValidRoom && formIsValidImg;
+  };
+
+  const handleUsernameInput = (e) => {
+    const inputVal = e.target.value.replace(/[^a-z\s]/gi, '');
+    setUsername(localStorage.setItem('username', inputVal));
   };
 
   const sendRoom = () => {
     socket.emit('room', room);
-    if(handleValidation()){
+    if (handleValidation()) {
       navigate('/chat');
-    } 
+    }
   };
   return (
     <div className='flex items-center justify-center h-full'>
@@ -72,7 +84,7 @@ function Room({ username, setUsername, room, setRoom, socket }) {
           <div className='w-full '>
             <input
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => handleUsernameInput(e)}
               className={`${
                 errName ? 'border-red-600' : ''
               } border focus:border-indigo-700 p-3 outline-none w-full rounded-lg`}
@@ -92,7 +104,9 @@ function Room({ username, setUsername, room, setRoom, socket }) {
           <div className='w-full relative '>
             <input
               value={room}
-              onChange={(e) => setRoom(e.target.value)}
+              onChange={(e) =>
+                setRoom(localStorage.setItem('room', e.target.value))
+              }
               className={`${
                 errRoom ? 'border-red-600' : ''
               } border focus:border-indigo-700 p-3 outline-none w-full rounded-lg`}
@@ -122,8 +136,8 @@ function Room({ username, setUsername, room, setRoom, socket }) {
         <div className='w-full p-1'>
           <h3 className='text-sm text-gray-700 pb-5'>Select Avatar</h3>
           <div className='avatars flex items center justify-between'>
-            {images &&
-              images.map((item, index) => {
+            {localImages() &&
+              localImages().map((item, index) => {
                 return (
                   <div key={index}>
                     <img

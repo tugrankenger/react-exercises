@@ -9,8 +9,8 @@ import { ContextProvider } from './context/DataContext';
 const socket = io.connect('http://localhost:5000');
 
 function App() {
-  const [username, setUsername] = useState('');
-  const [room, setRoom] = useState('');
+  const [username, setUsername] = useState(localStorage.getItem('username') || '');
+  const [room, setRoom] = useState(localStorage.getItem('room') || '');
   return (
     <ContextProvider>
       <div className='App'>
