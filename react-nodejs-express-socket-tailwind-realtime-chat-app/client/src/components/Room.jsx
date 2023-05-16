@@ -14,25 +14,22 @@ function Room({ username, setUsername, room, setRoom, socket }) {
   const { images } = useContext(DataContext);
   console.log('selectedContextData:', selectedImage);
 
-  username = localStorage.getItem('username');
-  room = localStorage.getItem('room');
-
   useEffect(() => {
-    localStorage.setItem('images',JSON.stringify(images))
+    localStorage.setItem('images', JSON.stringify(images));
   }, [images]);
 
-  const localImages= () =>{
-    const imgLoc = localStorage.getItem('images')
-    return imgLoc ? JSON.parse(imgLoc) : []
-  }
+  const localImages = () => {
+    const imgLoc = localStorage.getItem('images');
+    return imgLoc ? JSON.parse(imgLoc) : [];
+  };
 
-  console.log("localImages: ", localImages());
+  console.log('localImages: ', localImages());
 
   const handleImageClick = (event) => {
     event.isSelected = true;
     setSelected(event.id);
     setSelectedImage(event.id);
-    localStorage.setItem('selectedImage',event.id)
+    localStorage.setItem('selectedImage', event.id);
   };
 
   const handleValidation = () => {
@@ -65,12 +62,14 @@ function Room({ username, setUsername, room, setRoom, socket }) {
 
   const handleUsernameInput = (e) => {
     const inputVal = e.target.value.replace(/[^a-z\s]/gi, '');
-    setUsername(localStorage.setItem('username', inputVal));
+    setUsername(inputVal);
   };
 
   const sendRoom = () => {
     socket.emit('room', room);
     if (handleValidation()) {
+      localStorage.setItem('username', username);
+      localStorage.setItem('room', room);
       navigate('/chat');
     }
   };
@@ -104,9 +103,7 @@ function Room({ username, setUsername, room, setRoom, socket }) {
           <div className='w-full relative '>
             <input
               value={room}
-              onChange={(e) =>
-                setRoom(localStorage.setItem('room', e.target.value))
-              }
+              onChange={(e) => setRoom(e.target.value)}
               className={`${
                 errRoom ? 'border-red-600' : ''
               } border focus:border-indigo-700 p-3 outline-none w-full rounded-lg`}
@@ -134,7 +131,7 @@ function Room({ username, setUsername, room, setRoom, socket }) {
           </div>
         </div>
         <div className='w-full p-1'>
-          <h3 className='text-sm text-gray-700 pb-5'>Select Avatar</h3>
+          <h3 className='text-sm text-gray-500 pb-5'>Select Avatar</h3>
           <div className='avatars flex items center justify-between'>
             {localImages() &&
               localImages().map((item, index) => {

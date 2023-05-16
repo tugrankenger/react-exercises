@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 function Chat({ socket, username, setUsername, room, setRoom }) {
   const [message, setMessage] = useState('');
-  const [messageList, setMessageList] = useState([]);
+  const [messageList, setMessageList] = useState(JSON.parse(localStorage.getItem("messages")) ||[]);
+  const navigate = useNavigate();
 
   let images;
   const localImages = () => {
@@ -16,8 +17,6 @@ function Chat({ socket, username, setUsername, room, setRoom }) {
 
   console.log('local image', localImages()[0]);
   const userImage = images[localStorage.getItem('selectedImage') - 1]?.src;
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     socket.on('returnMessage', (data) => {
@@ -38,6 +37,12 @@ function Chat({ socket, username, setUsername, room, setRoom }) {
     setMessage('');
   };
 
+  localStorage.setItem("messages", JSON.stringify(messageList || []))
+
+  const getMessages = JSON.parse(localStorage.getItem("messages")) ||[]
+  console.log("getMessages",getMessages);
+  console.log("message-list:",messageList);
+
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && message !== '') {
       sendMessage();
@@ -47,9 +52,12 @@ function Chat({ socket, username, setUsername, room, setRoom }) {
   const handleClose = () => {
     setUsername('');
     setRoom('');
+    let removeLocalItems= ["username", "room"]
+    removeLocalItems.forEach(element => {
+      localStorage.removeItem(element)
+    });
     navigate('/');
   };
-  console.log(messageList);
   return (
     <div className='flex items-center justify-center h-full '>
       <div className='md:w-1/3 w-full md:h-[600px] h-full  bg-chat-image relative '>
@@ -68,8 +76,8 @@ function Chat({ socket, username, setUsername, room, setRoom }) {
         </div>
         <div className='w-full h-full md:h-[450px] py-16 md:py-0  overflow-y-auto '>
           <ScrollableFeed forceScroll={true}>
-            {messageList &&
-              messageList.map((item, index) => {
+            {getMessages &&
+              getMessages.map((item, index) => {
                 return (
                   <div
                     key={index}
@@ -84,7 +92,7 @@ function Chat({ socket, username, setUsername, room, setRoom }) {
                           : 'bg-green-600 '
                       } w-1/2 p-1 text-white m-2 rounded-xl rounded-br-none `}
                     >
-                      <div className='pl-1'>{item.message}</div>
+                      <div className='pl-1 break-words'>{item.message}</div>
                       <div className='w-full flex justify-end text-xs'>
                         {item.username} - {item.date}
                       </div>
