@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ScrollableFeed from 'react-scrollable-feed';
-import { MdSend } from 'react-icons/md';
+import { MdSend, MdDelete } from 'react-icons/md';
 import { BsPower } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 
@@ -40,8 +40,6 @@ function Chat({ socket, username, setUsername, room, setRoom }) {
   localStorage.setItem("messages", JSON.stringify(messageList || []))
 
   const getMessages = JSON.parse(localStorage.getItem("messages")) ||[]
-  console.log("getMessages",getMessages);
-  console.log("message-list:",messageList);
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && message !== '') {
@@ -49,10 +47,15 @@ function Chat({ socket, username, setUsername, room, setRoom }) {
     }
   };
 
+  const handleRemoveMessages= () =>{
+    localStorage.removeItem("messages")
+    setMessageList("")
+  }
+
   const handleClose = () => {
     setUsername('');
     setRoom('');
-    let removeLocalItems= ["username", "room"]
+    let removeLocalItems= ["username", "room", "messages"]
     removeLocalItems.forEach(element => {
       localStorage.removeItem(element)
     });
@@ -67,7 +70,10 @@ function Chat({ socket, username, setUsername, room, setRoom }) {
               <img className='w-11 h-11' src={userImage && userImage} alt='' />
               <span className='capitalize text-md'>{username}</span>
             </div>
-            <div className='flex'>
+            <div className='flex gap-x-3'>
+              <button onClick={handleRemoveMessages}>
+                <MdDelete size={25}/>
+              </button>
               <button onClick={handleClose} className='text-red-600'>
                 <BsPower size={25} />
               </button>
