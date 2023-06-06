@@ -12,6 +12,18 @@ export const TodoList = () => {
     { id: 2, text: 'go to cinema', completed: false },
   ]);
 
+  const [input, setInput] = useState<string>("")
+
+  const addTodo = () =>{
+      const newTodo: item ={
+        id: new Date().getTime(),
+        text:input,
+        completed:false
+      }
+      setTodos([...todos, newTodo])
+      setInput("")
+  }
+
   const handleToggle = (id: number) => {
     setTodos(
       todos.map((item) => {
@@ -41,8 +53,8 @@ export const TodoList = () => {
           );
         })}
       </ul>
-      <input type='text' placeholder='Add todo item' />
-      <button>Add Todo</button>
+      <input value={input} onChange={(e)=>setInput(e.target.value)} type='text' placeholder='Add todo item' />
+      <button onClick={addTodo}>Add Todo</button>
     </div>
   );
 };
