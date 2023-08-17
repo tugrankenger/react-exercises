@@ -84,6 +84,48 @@
   background: #0070d2;
 }
 
+.answer.correct {
+  animation: correct 3s ease forwards;
+}
+
+@keyframes correct {
+  0%,
+  20%,
+  40% {
+    background: #0000ff;
+  }
+  15%,
+  35%,
+  65% {
+    background: linear-gradient(#0e0124, #22074d);
+  }
+  66%,
+  100% {
+    background: #16d816;
+  }
+}
+
+.answer.wrong {
+  animation: wrong 3s ease forwards;
+}
+
+@keyframes wrong {
+  0%,
+  20%,
+  40% {
+    background: #0000ff;
+  }
+  15%,
+  35%,
+  65% {
+    background: linear-gradient(#0e0124, #22074d);
+  }
+  66%,
+  100% {
+    background: #ff0000;
+  }
+}
+
 .pyramid {
   width: 25%;
   background-color: #020230;
@@ -118,4 +160,39 @@
   font-weight: bold;
   color: #d2d0d0;
   font-size: 1.2rem;
+}
+
+.earned {
+  margin: auto;
+}
+
+.start {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.startInput {
+  border: 2px solid #fff;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #020230;
+}
+
+.startButton {
+  border: 2px solid #fff;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #020230;
+  cursor: pointer;
 }
